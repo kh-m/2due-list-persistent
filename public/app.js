@@ -9,6 +9,12 @@ $(document).ready(function() {
             createTodo();
         }
     });
+    
+    // listens to clicks on span of item
+    // reason why it's specified on '.list' first is because no spans will be there when page first loads, so have to choose something that exists when the page is loaded i.e. '.list'
+    $('.list').on('click', 'span', function() {
+        removeTodo($(this).parent());
+    })
 });
 
 function addTodos(todos) {
@@ -18,7 +24,9 @@ function addTodos(todos) {
 };
 
 function addTodo(todo) {
-    var newTodo = $('<li class="task">' + todo.name + '</li>');
+    var newTodo = $('<li class="task">' + todo.name + ' <span>X</span></li>');
+    // storing the newTodo an id attribute based off it's MongoDB _id in order to call it by later when deleting
+    newTodo.data('id', todo._id);
         if(todo.completed) {
             newTodo.addClass("done");
         }
@@ -36,4 +44,21 @@ function createTodo() {
     .catch(function(err) {
         console.log(err);
     })
+}
+
+function removeTodo(todo) {
+    var clickedId = todo.data('id');
+        var deleteUrl = 'api/todos/'+ clickedId;
+        // deletes the todo from MongoDB
+        $.ajax({
+            method: 'DELETE',
+            url: deleteUrl
+        })
+        // deletes the todo from DOM
+        .then(function(data) {
+            todo.remove();
+        })
+        .catch(function(err) {
+            console.log(err);
+        })
 }

@@ -1,16 +1,16 @@
-// a jQuery method that waits until the document has loaded to perform
+// jQuery method that runs after page has loaded
 $(document).ready(function () {
     $.getJSON("/api/todos")
         .then(addTodos)
 
-    // listens to enter key in input
+    // Listens to enter key in input
     $('#todoInput').keypress(function (event) {
         if (event.which == 13) {
             createTodo();
         }
     });
 
-    // listens to clicks on span of item
+    // Listens to clicks on span of item
     // reason why it's specified on '.list' first is because no spans will be there when page first loads, so have to choose something that exists when the page is loaded i.e. '.list'
     $('.list').on('click', 'span', function (e) {
         // will stop the event from ('bubbling') also triggering the parent '.list' li
@@ -23,7 +23,7 @@ $(document).ready(function () {
     });
 });
 
-// adds ALL todos to DOM list in li
+// Adds ALL todos to DOM list in li
 function addTodos(todos) {
     todos.forEach(function (todo) {
         addTodo(todo);

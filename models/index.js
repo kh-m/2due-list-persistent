@@ -1,8 +1,11 @@
 var mongoose = require("mongoose");
 mongoose.set("debug", true);
-mongoose.connect("mongodb://localhost:27017/todo-api", { useNewUrlParser: true });
 
-// allows us to use the Promise syntax
+var url = process.env.TWODUEMLABDB || "mongodb://localhost:27017/todo-api";
+
+mongoose.connect(url, { useNewUrlParser: true });
+
+// allows use of the Promise syntax
 mongoose.Promise = Promise;
 
 module.exports.Todo = require("./todo");

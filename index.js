@@ -15,12 +15,12 @@ app.get("/", function(req, res) {
     res.sendFile("index.html");
 });
 
-// // For running on external server
-// app.listen(env.process.PORT, env.process.IP, function() {
-//     console.log("Server running");
-// })
-
-// For running on local server
-app.listen(8000, function() {
+// For running on external server
+app.listen(process.env.PORT, process.env.IP, function() {
     console.log("Server running");
-});
+})
+
+// // For running on local server
+// app.listen(8000, function() {
+//     console.log("Server running");
+// });
